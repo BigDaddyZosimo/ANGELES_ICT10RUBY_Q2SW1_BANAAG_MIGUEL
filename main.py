@@ -1,37 +1,29 @@
-from pyscript import document, display
+from pyscript import document
 
-my_listcuh = ["Jacob Cortez", "Luis Pablo", "Mason Amos", "Earl Abadam", "JC Macalalag", "Joaquin Tovera"]
+my_listcuh = [
+    "Jacob Cortez",
+    "Luis Pablo",
+    "Mason Amos",
+    "Earl Abadam",
+    "JC Macalalag",
+    "Joaquin Tovera"
+]
 
-def show_list():
-    output = document.getElementById("output")
-    output.innerHTML = ""
 
-    for item in my_listcuh:
-        badge_html = f"<span class='archer-badge'>{item}</span>"
-        display(badge_html, target="output", append=True)
+def verify_candidate(event):
+    first = document.getElementById("first_name").value.strip()
+    last = document.getElementById("last_name").value.strip()
+    full_name = f"{first} {last}"
+    result_area = document.getElementById("result_area")
 
-def append_value(e):
-    value = document.getElementById("user_input").value.strip()
-    message = document.getElementById("message")
+    is_member = full_name in my_listcuh
 
-    if value:
-        my_listcuh.append(value)
-        message.innerHTML = "data added successfully"
-        show_list()
-    else:
-        message.innerHTML = "please add a value"
-    document.getElementById("user_input").value = ""
+    messages = {
+        True: f"Congratulations {full_name}! You are now part of the ICT club.",
+        False: f"Sorry {full_name}, your name is not on the list."
+    }
 
-def delete_value(e):
-    value = document.getElementById("user_input").value.strip()
-    message = document.getElementById("message")
+    result_area.innerText = messages[is_member]
 
-    if value in my_listcuh:
-        my_listcuh.remove(value)
-        message.innerHTML = "Player kicked successfully"
-        show_list()
-    else:
-        message.innerHTML = "value not found"
-    document.getElementById("user_input").value = ""
-
-show_list()
+    document.getElementById("first_name").value = ""
+    document.getElementById("last_name").value = ""
